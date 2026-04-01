@@ -1,0 +1,61 @@
+package com.neo.stayhub.rest;
+
+import com.neo.stayhub.model.PaymentTransactionDTO;
+import com.neo.stayhub.service.PaymentTransactionService;
+import jakarta.validation.Valid;
+import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+@RestController
+@RequestMapping(value = "/api/paymentTransactions", produces = MediaType.APPLICATION_JSON_VALUE)
+public class PaymentTransactionResource {
+
+    private final PaymentTransactionService paymentTransactionService;
+
+    public PaymentTransactionResource(final PaymentTransactionService paymentTransactionService) {
+        this.paymentTransactionService = paymentTransactionService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PaymentTransactionDTO>> getAllPaymentTransactions() {
+        return ResponseEntity.ok(paymentTransactionService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PaymentTransactionDTO> getPaymentTransaction(
+            @PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(paymentTransactionService.get(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<Long> createPaymentTransaction(
+            @RequestBody @Valid final PaymentTransactionDTO paymentTransactionDTO) {
+        final Long createdId = paymentTransactionService.create(paymentTransactionDTO);
+        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Long> updatePaymentTransaction(@PathVariable(name = "id") final Long id,
+            @RequestBody @Valid final PaymentTransactionDTO paymentTransactionDTO) {
+        paymentTransactionService.update(id, paymentTransactionDTO);
+        return ResponseEntity.ok(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePaymentTransaction(@PathVariable(name = "id") final Long id) {
+        paymentTransactionService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+}
