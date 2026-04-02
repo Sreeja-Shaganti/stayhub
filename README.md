@@ -326,26 +326,6 @@ Located in: `src/main/java/com/neo/stayhub/model/`
 - **ValidationException**: Input validation errors (400)
 - **UnauthorizedException**: Authentication/Authorization issues (401/403)
 
-## 📝 Development Guidelines
-
-### Code Standards
-- Follow Java naming conventions
-- Use meaningful variable and method names
-- Add JavaDoc comments for public methods
-- Use Lombok annotations to reduce boilerplate
-
-### Git Workflow
-- Create feature branches from `master`
-- Use meaningful commit messages
-- Create pull requests for code review
-- Follow commit convention: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`
-
-### Testing
-- Write unit tests for services
-- Write integration tests for controllers
-- Aim for 80%+ code coverage
-- Use JUnit 5 and Mockito
-
 ## 🚢 Deployment
 
 ### Building Docker Image
