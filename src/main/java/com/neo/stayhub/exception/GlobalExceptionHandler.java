@@ -184,7 +184,9 @@ public class GlobalExceptionHandler {
 
     }
 
-    // Handles authenticated users who lack the required roles/permissions (@PreAuthorize)
+    // /////////////////
+    // //////////     -- checking conflicts
+    //Handling the error client side
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponseDTO> handleAccessDenied(AccessDeniedException ex, HttpServletRequest request) {
         ErrorResponseDTO apiError = buildApiError(HttpStatus.FORBIDDEN, "You do not have permission to execute this action.", request.getRequestURI());
