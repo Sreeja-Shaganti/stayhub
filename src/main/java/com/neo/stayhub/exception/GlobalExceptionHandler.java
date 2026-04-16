@@ -184,6 +184,9 @@ public class GlobalExceptionHandler {
 
     }
 
+    /////////////////
+    //////////     -- checking conflicts 
+
     // Handles authenticated users who lack the required roles/permissions (@PreAuthorize)
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponseDTO> handleAccessDenied(AccessDeniedException ex, HttpServletRequest request) {
