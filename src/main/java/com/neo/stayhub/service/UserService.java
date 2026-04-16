@@ -2,11 +2,13 @@ package com.neo.stayhub.service;
 
 import com.neo.stayhub.domain.User;
 import com.neo.stayhub.events.BeforeDeleteUser;
+import com.neo.stayhub.exception.ResourceNotFoundException;
 import com.neo.stayhub.model.UserDTO;
 import com.neo.stayhub.repos.UserRepository;
 import com.neo.stayhub.util.NotFoundException;
 import java.util.List;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -30,15 +32,18 @@ public class UserService {
                 .toList();
     }
 
-    public UserDTO get(final Long id) {
+    public UserDTO get(final Long id){
         return userRepository.findById(id)
                 .map(user -> mapToDTO(user, new UserDTO()))
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     public Long create(final UserDTO userDTO) {
         final User user = new User();
         mapToEntity(userDTO, user);
+        if(userRepository.existsByEmail(user.getEmail())) {
+            throw new DataIntegrityViolationException("Email already exists");
+        }
         return userRepository.save(user).getId();
     }
 

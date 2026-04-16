@@ -4,9 +4,12 @@ import com.neo.stayhub.model.UserDTO;
 import com.neo.stayhub.service.UserService;
 import jakarta.validation.Valid;
 import java.util.List;
+
+import jakarta.validation.constraints.Min;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +36,7 @@ public class UserResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable(name = "id") final Long id) {
+    public ResponseEntity<UserDTO> getUser(@PathVariable(name = "id") @Min(1000) final Long id) {
         return ResponseEntity.ok(userService.get(id));
     }
 

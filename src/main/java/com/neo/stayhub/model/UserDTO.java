@@ -1,5 +1,6 @@
 package com.neo.stayhub.model;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.OffsetDateTime;
@@ -18,7 +19,8 @@ public class UserDTO {
     private String fullName;
 
     @NotNull
-    @Size(max = 150)
+    @Size(max = 150, min = 2)
+    @Email
     private String email;
 
     @Size(max = 20)
@@ -37,13 +39,10 @@ public class UserDTO {
     @NotNull
     private Boolean emailVerified;
 
-    @NotNull
     private OffsetDateTime createdAt;
 
-    @NotNull
     private OffsetDateTime updatedAt;
 
-    @NotNull
     private Long version;
 
 }

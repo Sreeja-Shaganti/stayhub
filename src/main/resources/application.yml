@@ -1,12 +1,13 @@
 spring:
   datasource:
-    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/stayhub}
-    username: ${JDBC_DATABASE_USERNAME:postgres}
-    password: ${JDBC_DATABASE_PASSWORD:<<PASSWORD>>}
+    url: jdbc:postgresql://localhost:5432/stayhub
+    username: postgres
+    password: admin
     hikari:
       connection-timeout: 30000
       maximum-pool-size: 10
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: update
     open-in-view: false
@@ -17,3 +18,11 @@ spring:
             non_contextual_creation: true
         id:
           new_generator_mappings: true
+        format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.engine.jdbc.spi.SqlExceptionHelper: ERROR
+    org.springframework.jdbc: ERROR

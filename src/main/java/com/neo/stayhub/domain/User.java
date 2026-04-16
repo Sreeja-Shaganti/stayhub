@@ -1,14 +1,7 @@
 package com.neo.stayhub.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +13,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"email"})
+})
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
@@ -43,7 +38,7 @@ public class User {
     @Column(nullable = false, length = 150)
     private String fullName;
 
-    @Column(nullable = false, length = 150)
+    @Column(nullable = false, length = 150,  unique = true)
     private String email;
 
     @Column(length = 20)
@@ -62,9 +57,11 @@ public class User {
     private Boolean emailVerified;
 
     @Column(nullable = false)
+    @CreatedDate
     private OffsetDateTime createdAt;
 
     @Column(nullable = false)
+    @LastModifiedDate
     private OffsetDateTime updatedAt;
 
     @Column(nullable = false)
